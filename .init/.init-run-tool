@@ -1,0 +1,4 @@
+{
+    "command": "source venv/bin/activate && python manage.py migrate && python manage.py runserver <host>:<port>",
+    "working_directory": "/home/kavia/workspace/code-generation/eventmanagerapi-62799-1759a8bb/event_api_backend"
+}
