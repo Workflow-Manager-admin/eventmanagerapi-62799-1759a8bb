@@ -9,7 +9,10 @@ from .serializers import EventSerializer
 # Health check endpoint (no auth)
 @api_view(['GET'])
 def health(request):
+    print(self.request.scheme)
+    print(self.request.get_host())
     return Response({"message": "Server is up!"})
+
 
 
 # PUBLIC_INTERFACE

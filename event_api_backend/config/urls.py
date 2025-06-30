@@ -20,6 +20,7 @@ from rest_framework import permissions
 from rest_framework.authtoken.views import obtain_auth_token
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework.decorators import api_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +38,21 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+@api_view(['GET'])
+def dynamic_schema(request):
+    # Get the dynamic base URL with port
+    print(request)
+    base_url = f"{request.scheme}://{request.get_host()}:{request.get_port()}"
+
+    # Generate the schema with dynamic base URL
+    generator = schema_view.generator_class(
+        info=schema_view.info,
+        url=base_url,
+        patterns=schema_view.patterns,
+    )
+    schema = generator.get_schema(request=request)
+    return Response(schema)
+    
 urlpatterns += [
     re_path(
         r'^docs/$',
